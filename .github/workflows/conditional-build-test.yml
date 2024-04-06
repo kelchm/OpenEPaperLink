@@ -1,0 +1,52 @@
+name: FW Build / Test (Conditional Steps PoC)
+
+on: [push,pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          token: ${{ github.token }}
+          filters: |
+            arm-tag-newton-m3-nrf52811:
+              - 'ARM_Tag_FW/Newton_M3_nRF52811/**'
+              - 'ARM_Tag_FW/common/**'
+            arm-tag.nrf52811-pio-ap:
+              - 'ARM_Tag_FW/nrf52811_Platformio_AP/**'
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+
+      - name: Install intelhex
+        run: pip install --upgrade intelhex
+
+      - name: ARM_Tag_FW/Newton_M3_nRF52811
+        if: steps.filter.outputs.arm-tag-newton-m3-nRF52811 == 'true'
+        run: |
+          cd ARM_Tag_FW/Newton_M3_nRF52811
+          pio run --environment Newton_M3_Universal
+
+      - name: ARM_Tag_FW/nrf52811_Platformio_AP
+        if: steps.filter.outputs.arm-tag.nrf52811-pio-ap == 'true'
+        run: |
+          cd ARM_Tag_FW/nrf52811_Platformio_AP
+          pio run --environment nrf52811_OEPL_AP
