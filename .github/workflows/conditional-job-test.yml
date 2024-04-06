@@ -53,7 +53,7 @@ jobs:
   ap-build:
     name: Build AP FWs
     runs-on: ubuntu-22.04
-    needs: [determine-builds, tag-build-setup]
+    needs: [determine-builds, ap-build-setup]
     steps:
       - name: Build OpenEPaperLink_Mini_AP
         if: needs.determine-builds.outputs.esp32-ap == 'true'
