@@ -19,28 +19,28 @@ jobs:
           python-version: '3.9'
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
-        
+
       - name: Install intelhex
         run: pip install --upgrade intelhex
-        
+
 #      - name: Build Simple_AP
 #        run: |
 #          cd ESP32_AP-Flasher
 #          pio run --environment Simple_AP
 #          pio run --target buildfs --environment Simple_AP
-          
+
       - name: Build OpenEPaperLink_Mini_AP
         run: |
           cd ESP32_AP-Flasher
           pio run --environment OpenEPaperLink_Mini_AP
           pio run --target buildfs --environment OpenEPaperLink_Mini_AP
-          
+
       - name: Build OpenEPaperLink_AP_and_Flasher
         run: |
           cd ESP32_AP-Flasher
           pio run --environment OpenEPaperLink_AP_and_Flasher
           pio run --target buildfs --environment OpenEPaperLink_AP_and_Flasher
-          
+
       - name: Build ESP32_S3_16_8_YELLOW_AP
         run: |
           cd ESP32_AP-Flasher
@@ -52,3 +52,8 @@ jobs:
           cd ESP32_AP-Flasher
           pio run --environment OpenEPaperLink_Mini_AP_v4
           pio run --target buildfs --environment OpenEPaperLink_Mini_AP_v4
+
+      - name: ARM_TAG_FW/Newton_M3_nRF52811
+        run: |
+          cd ARM_TAG_FW/Newton_M3_nRF52811
+          pio run --environment Newton_M3_Universal
