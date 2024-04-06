@@ -22,7 +22,7 @@ jobs:
           filters: .github/path-filters.yml
 
   tag-build-setup:
-    uses: ./.github/reusable/setup-pio-environment.yml
+    uses: ./.github/workflows/setup-pio-environment.yml
 
   tag-build:
     name: Build Tag FWs
@@ -48,7 +48,7 @@ jobs:
           exit 1
 
   ap-build-setup:
-    uses: ./.github/reusable/setup-pio-environment.yml
+    uses: ./.github/workflows/setup-pio-environment.yml
 
   ap-build:
     name: Build AP FWs
