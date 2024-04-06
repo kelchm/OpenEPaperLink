@@ -15,17 +15,8 @@ jobs:
         id: filter
         with:
           token: ${{ github.token }}
-          filters: |
-            arm-tag_newton-m3-nrf52811:
-              - 'ARM_Tag_FW/Newton_M3_nRF52811/**'
-              - 'ARM_Tag_FW/common/**'
-            arm-tag_nrf52811-pio-ap:
-              - 'ARM_Tag_FW/nrf52811_Platformio_AP/**'
-            arm-tag_88MZ100:
-              - 'ARM_Tag_FW/88MZ100/**'
-              - 'ARM_Tag_FW/common/**'
-            esp32-ap:
-              - 'ESP32_AP_Flasher/**'
+          filters: .github/path-filters.yml
+
 
       - uses: actions/cache@v3
         with:
