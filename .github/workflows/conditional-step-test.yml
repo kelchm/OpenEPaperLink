@@ -1,0 +1,82 @@
+name: FW Build / Test (Conditional Step PoC)
+
+on: [push,pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          token: ${{ github.token }}
+          filters: .github/path-filters.yml
+
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+
+      - name: Install intelhex
+        run: pip install --upgrade intelhex
+
+      - name: ARM_Tag_FW/Newton_M3_nRF52811
+        if: steps.filter.outputs.arm-tag_newton-m3-nrf52811 == 'true'
+        run: |
+          cd ARM_Tag_FW/Newton_M3_nRF52811
+          pio run --environment Newton_M3_Universal
+
+      - name: ARM_Tag_FW/nrf52811_Platformio_AP
+        if: steps.filter.outputs.arm-tag_nrf52811-pio-ap == 'true'
+        run: |
+          cd ARM_Tag_FW/nrf52811_Platformio_AP
+          pio run --environment nrf52811_OEPL_AP
+
+      - name: ARM_Tag_FW/nrf52811_Platformio_AP
+        if: steps.filter.outputs.arm-tag_88MZ100 == 'true'
+        run: |
+          echo "POC: this shouldn't run"
+          exit 1
+
+      - name: Build OpenEPaperLink_Mini_AP
+        if: steps.filter.outputs.esp32-ap == 'true'
+        run: |
+          cd ESP32_AP-Flasher
+          pio run --environment OpenEPaperLink_Mini_AP
+          pio run --target buildfs --environment OpenEPaperLink_Mini_AP
+
+      - name: Build OpenEPaperLink_AP_and_Flasher
+        if: steps.filter.outputs.esp32-ap == 'true'
+        run: |
+          cd ESP32_AP-Flasher
+          pio run --environment OpenEPaperLink_AP_and_Flasher
+          pio run --target buildfs --environment OpenEPaperLink_AP_and_Flasher
+
+      - name: Build ESP32_S3_16_8_YELLOW_AP
+        if: steps.filter.outputs.esp32-ap == 'true'
+        run: |
+          cd ESP32_AP-Flasher
+          pio run --environment ESP32_S3_16_8_YELLOW_AP
+          pio run --target buildfs --environment ESP32_S3_16_8_YELLOW_AP
+
+      - name: OpenEPaperLink_Mini_AP_v4
+        if: steps.filter.outputs.esp32-ap == 'true'
+        run: |
+          cd ESP32_AP-Flasher
+          pio run --environment OpenEPaperLink_Mini_AP_v4
+          pio run --target buildfs --environment OpenEPaperLink_Mini_AP_v4
