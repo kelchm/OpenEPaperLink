@@ -1,11 +1,11 @@
 name: FW Build / Test (Conditional Job PoC)
 
-on: [push,pull_request]
+on: [push, pull_request]
 
 jobs:
   determine-builds:
     name: Evaluate Required Builds
-    runs-on: ubuntu-20.04x
+    runs-on: ubuntu-20.04
     timeout-minutes: 1
     # Map a step output to a job output
     outputs:
@@ -31,6 +31,7 @@ jobs:
         with:
           submodules: 'recursive'
       - uses: ./.github/actions/setup-pio
+
       - name: ARM_Tag_FW/Newton_M3_nRF52811
         if: ${{ needs.determine-builds.outputs.arm-tag_newton-m3-nrf52811 == 'true' }}
         run: |
@@ -58,7 +59,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
       - uses: ./.github/actions/setup-pio
 
       - name: Build OpenEPaperLink_Mini_AP
