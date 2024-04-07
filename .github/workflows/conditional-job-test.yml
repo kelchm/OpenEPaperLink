@@ -32,6 +32,7 @@ jobs:
       - name: ARM_Tag_FW/Newton_M3_nRF52811
         if: ${{ needs.determine-builds.outputs.arm-tag_newton-m3-nrf52811 == 'true' }}
         run: |
+          pio --version
           cd ARM_Tag_FW/Newton_M3_nRF52811
           pio run --environment Newton_M3_Universal
 
