@@ -1,16 +1,18 @@
 
 MZ_FLASHER=python ../88MZ100_Flasher/88MZ100_Uart_flasher.py
 
-ARMGCC=/usr/bin/
-CC=$(ARMGCC)arm-none-eabi-gcc
-GPLUSPLUS=$(ARMGCC)arm-none-eabi-g++
-AS=$(ARMGCC)arm-none-eabi-as
-OBJCOPY=$(ARMGCC)arm-none-eabi-objcopy
+# If ARMGCC_PATH is not set, use /usr/bin as the default value
+ARMGCC_PATH?=/usr/bin/
+
+CC=$(ARMGCC_PATH)arm-none-eabi-gcc
+GPLUSPLUS=$(ARMGCC_PATH)arm-none-eabi-g++
+AS=$(ARMGCC_PATH)arm-none-eabi-as
+OBJCOPY=$(ARMGCC_PATH)arm-none-eabi-objcopy
 
 #-Wall
 CC_WARNING_FLAGS=-Wall -Wformat=0 -Wattributes -Wstrict-aliasing=0
 CPP_FLAGS=-lstdc++ -mcpu=cortex-m3 -g -O3 -mthumb -fdata-sections -ffunction-sections -std=c++98 -std=gnu++0x
-CPP0_FLAGS=-lstdc++ -mcpu=cortex-m3 -g -O0 -mthumb -fdata-sections -ffunction-sections -std=c++98 -std=gnu++0x 
+CPP0_FLAGS=-lstdc++ -mcpu=cortex-m3 -g -O0 -mthumb -fdata-sections -ffunction-sections -std=c++98 -std=gnu++0x
 CC_FLAGS=-mcpu=cortex-m3 -g -O0 -mthumb -fdata-sections -ffunction-sections -std=c99
 CC3_FLAGS=-mcpu=cortex-m3 -g -O3 -mthumb -fdata-sections -ffunction-sections -std=c99
 CC_END_FLAGS=-lstdc++ -lc -lnosys -L. -T mz100/mz100.ld -fPIE --specs=nosys.specs -mcpu=cortex-m3 -mthumb -Wl,--gc-sections -O0 -flto -ffunction-sections -fdata-sections -DARM_GNU
@@ -111,18 +113,18 @@ compile:
 	@cat build/fs.img >> main.bin
 clean:
 	@rm -rf build/*
-	
+
 flash_uart:
 	@$(MZ_FLASHER) $(COMPORT) write main.bin
-	
+
 flash_uart_flash:
 	@$(MZ_FLASHER) $(COMPORT) write_flash main.bin
-	
+
 flash_stock:
 	@$(MZ_FLASHER) $(COMPORT) write_flash stock.bin
-	
+
 flash_dump:
 	@$(MZ_FLASHER) $(COMPORT) read dump.bin
-	
+
 create_ota_img:
 	@$(MZ_FLASHER) img main.bin UPDT0028.BIN
