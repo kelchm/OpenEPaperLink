@@ -7,12 +7,12 @@ jobs:
     name: Evaluate Required Builds
     runs-on: ubuntu-20.04
     timeout-minutes: 1
-    # Map a step output to a job output
+    # Map a step output to job output
     outputs:
-      arm-tag_newton-m3-nrf52811: ${{steps.filter.outputs.arm-tag_newton-m3-nrf52811 }}
-      arm-tag_nrf52811-pio-ap: ${{steps.filter.outputs.arm-tag_nrf52811-pio-ap }}
-      arm-tag_88MZ100: ${{steps.filter.outputs.arm-tag_88MZ100 }}
-      esp32-ap: ${{steps.filter.outputs.esp32-ap }}
+      arm-tag_newton-m3-nrf52811: ${{ steps.filter.outputs.arm-tag_newton-m3-nrf52811 }}
+      arm-tag_nrf52811-pio-ap: ${{ steps.filter.outputs.arm-tag_nrf52811-pio-ap }}
+      arm-tag_88MZ100: ${{ steps.filter.outputs.arm-tag_88MZ100 }}
+      esp32-ap: ${{ steps.filter.outputs.esp32-ap }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -47,9 +47,9 @@ jobs:
 
       - name: ARM_Tag_FW/88MZ100_OpenEpaperLink_7.4
         if: ${{ needs.determine-builds.outputs.arm-tag_88MZ100 == 'true' }}
+        # TODO: Implement build for 88MZ100
         run: |
-          echo "POC: this shouldn't run"
-          exit 1
+          echo "Note: build for 88MZ100 has not been implementted yet."
 
   ap-build:
     name: Build AP FWs
