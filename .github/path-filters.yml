@@ -13,4 +13,4 @@ arm-tag_88MZ100:
   - 'ARM_Tag_FW/88MZ100/**'
 
 esp32-ap:
-  - 'ESP32_AP_Flasher/**'
+  - 'ESP32_AP-Flasher/**'
