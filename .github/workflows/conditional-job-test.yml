@@ -26,7 +26,7 @@ jobs:
     needs: [determine-builds]
     runs-on: ubuntu-22.04
     steps:
-      - uses: ./.github/actions/setup-pio-environment.yml
+      - uses: ./.github/actions/setup-pio
       - name: ARM_Tag_FW/Newton_M3_nRF52811
         if: ${{ needs.determine-builds.outputs.arm-tag_newton-m3-nrf52811 == 'true' }}
         run: |
@@ -52,7 +52,7 @@ jobs:
     if: ${{ needs.determine-builds.outputs.esp32-ap == 'true' }}
     runs-on: ubuntu-22.04
     steps:
-      - uses: ./.github/actions/setup-pio-environment.yml
+      - uses: ./.github/actions/setup-pio
       - name: Build OpenEPaperLink_Mini_AP
         run: |
           cd ESP32_AP-Flasher
