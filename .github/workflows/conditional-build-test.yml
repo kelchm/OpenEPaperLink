@@ -55,34 +55,23 @@ jobs:
     name: Build AP FWs
     needs: [determine-builds]
     if: ${{ needs.determine-builds.outputs.esp32-ap == 'true' }}
+    strategy:
+      matrix:
+        environment:
+          - OpenEPaperLink_Mini_AP
+          - OpenEPaperLink_AP_and_Flasher
+          - ESP32_S3_16_8_YELLOW_AP
+          - OpenEPaperLink_Mini_AP_v4
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
       - uses: ./.github/actions/setup-pio
 
-      - name: Build OpenEPaperLink_Mini_AP
+      - name: Build ${{ matrix.environment }}
         run: |
           cd ESP32_AP-Flasher
-          pio run --environment OpenEPaperLink_Mini_AP
-          pio run --target buildfs --environment OpenEPaperLink_Mini_AP
-
-      - name: Build OpenEPaperLink_AP_and_Flasher
-        run: |
-          cd ESP32_AP-Flasher
-          pio run --environment OpenEPaperLink_AP_and_Flasher
-          pio run --target buildfs --environment OpenEPaperLink_AP_and_Flasher
-
-      - name: Build ESP32_S3_16_8_YELLOW_AP
-        run: |
-          cd ESP32_AP-Flasher
-          pio run --environment ESP32_S3_16_8_YELLOW_AP
-          pio run --target buildfs --environment ESP32_S3_16_8_YELLOW_AP
-
-      - name: OpenEPaperLink_Mini_AP_v4
-        run: |
-          cd ESP32_AP-Flasher
-          pio run --environment OpenEPaperLink_Mini_AP_v4
-          pio run --target buildfs --environment OpenEPaperLink_Mini_AP_v4
+          pio run --environment ${{ matrix.environment }}
+          pio run --target buildfs --environment ${{ matrix.environment }}
 
 
