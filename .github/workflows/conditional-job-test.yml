@@ -26,23 +26,23 @@ jobs:
 
   tag-build:
     name: Build Tag FWs
-    runs-on: ubuntu-22.04
     needs: [determine-builds, tag-build-setup]
+    runs-on: ubuntu-22.04
     steps:
       - name: ARM_Tag_FW/Newton_M3_nRF52811
-        if: needs.determine-builds.outputs.arm-tag_newton-m3-nrf52811 == 'true'
+        if: ${{ needs.determine-builds.outputs.arm-tag_newton-m3-nrf52811 == 'true' }}
         run: |
           cd ARM_Tag_FW/Newton_M3_nRF52811
           pio run --environment Newton_M3_Universal
 
       - name: ARM_Tag_FW/nrf52811_Platformio_AP
-        if: needs.determine-builds.outputs.arm-tag_nrf52811-pio-ap == 'true'
+        if: ${{ needs.determine-builds.outputs.arm-tag_nrf52811-pio-ap == 'true' }}
         run: |
           cd ARM_Tag_FW/nrf52811_Platformio_AP
           pio run --environment nrf52811_OEPL_AP
 
       - name: ARM_Tag_FW/nrf52811_Platformio_AP
-        if: needs.determine-builds.outputs.arm-tag_88MZ100 == 'true'
+        if: ${{ needs.determine-builds.outputs.arm-tag_88MZ100 == 'true' }}
         run: |
           echo "POC: this shouldn't run"
           exit 1
@@ -52,32 +52,29 @@ jobs:
 
   ap-build:
     name: Build AP FWs
-    runs-on: ubuntu-22.04
     needs: [determine-builds, ap-build-setup]
+    if: ${{ needs.determine-builds.outputs.esp32-ap == 'true' }}
+    runs-on: ubuntu-22.04
     steps:
       - name: Build OpenEPaperLink_Mini_AP
-        if: needs.determine-builds.outputs.esp32-ap == 'true'
         run: |
           cd ESP32_AP-Flasher
           pio run --environment OpenEPaperLink_Mini_AP
           pio run --target buildfs --environment OpenEPaperLink_Mini_AP
 
       - name: Build OpenEPaperLink_AP_and_Flasher
-        if: needs.determine-builds.outputs.esp32-ap == 'true'
         run: |
           cd ESP32_AP-Flasher
           pio run --environment OpenEPaperLink_AP_and_Flasher
           pio run --target buildfs --environment OpenEPaperLink_AP_and_Flasher
 
       - name: Build ESP32_S3_16_8_YELLOW_AP
-        if: needs.determine-builds.outputs.esp32-ap == 'true'
         run: |
           cd ESP32_AP-Flasher
           pio run --environment ESP32_S3_16_8_YELLOW_AP
           pio run --target buildfs --environment ESP32_S3_16_8_YELLOW_AP
 
       - name: OpenEPaperLink_Mini_AP_v4
-        if: needs.determine-builds.outputs.esp32-ap == 'true'
         run: |
           cd ESP32_AP-Flasher
           pio run --environment OpenEPaperLink_Mini_AP_v4
