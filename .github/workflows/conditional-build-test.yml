@@ -22,7 +22,7 @@ jobs:
           filters: .github/path-filters.yml
 
   tag-build:
-    name: Build Tag FWs
+    name: Build Tag FW
     needs: [determine-builds]
     runs-on: ubuntu-22.04
     steps:
@@ -52,7 +52,7 @@ jobs:
           echo "Note: build for 88MZ100 has not been implementted yet."
 
   ap-build:
-    name: Build AP FWs
+    name: Build AP FW
     needs: [determine-builds]
     if: ${{ needs.determine-builds.outputs.esp32-ap == 'true' }}
     strategy:
