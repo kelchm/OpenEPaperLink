@@ -25,8 +25,10 @@ runs:
         python-version: ${{ inputs.python-version }}
 
     - name: Install PlatformIO Core
+      shell: bash
       run: pip install --upgrade platformio
 
     - name: Install intelhex
+      shell: bash
       run: pip install --upgrade intelhex
 
