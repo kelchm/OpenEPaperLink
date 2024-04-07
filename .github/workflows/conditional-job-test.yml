@@ -9,10 +9,10 @@ jobs:
     timeout-minutes: 1
     # Map a step output to a job output
     outputs:
-      arm-tag_newton-m3-nrf52811: ${{ needs.determine-builds.outputs.arm-tag_newton-m3-nrf52811 }}
-      arm-tag_nrf52811-pio-ap: ${{ needs.determine-builds.outputs.arm-tag_nrf52811-pio-ap }}
-      arm-tag_88MZ100: ${{ needs.determine-builds.outputs.arm-tag_88MZ100 }}
-      esp32-ap: ${{ needs.determine-builds.outputs.esp32-ap }}
+      arm-tag_newton-m3-nrf52811: ${{steps.filter.outputs.arm-tag_newton-m3-nrf52811 }}
+      arm-tag_nrf52811-pio-ap: ${{steps.filter.outputs.arm-tag_nrf52811-pio-ap }}
+      arm-tag_88MZ100: ${{steps.filter.outputs.arm-tag_88MZ100 }}
+      esp32-ap: ${{steps.filter.outputs.esp32-ap }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
