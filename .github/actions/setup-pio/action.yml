@@ -1,20 +1,15 @@
 name: Setup PlatformIO
+description: 'Installs PlatformIO and necessary dependencies.'
 
 inputs:
   python-version:
-    description: 'Installs PlatformIO and necessary dependencies.'
+    description: 'Set Python version (optional)'
     required: false
     default: '3.9'
 
 runs:
   using: "composite"
   steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        # TODO: set via input?
-        submodules: 'recursive'
-
     - name: Cache pip
       id: cache-pip
       uses: actions/cache@v3
