@@ -54,7 +54,7 @@ jobs:
           echo "Note: build for 88MZ100 has not been implementted yet."
 
   ap-build:
-    name: Build AP FW
+    name: ${{ matrix.environment }} Build
     needs: [determine-builds]
     if: ${{ needs.determine-builds.outputs.esp32-ap == 'true' }}
     strategy:
