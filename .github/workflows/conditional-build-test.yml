@@ -13,6 +13,7 @@ jobs:
       arm-tag_nrf52811-pio-ap: ${{ steps.filter.outputs.arm-tag_nrf52811-pio-ap }}
       arm-tag_88MZ100: ${{ steps.filter.outputs.arm-tag_88MZ100 }}
       esp32-ap: ${{ steps.filter.outputs.esp32-ap }}
+      changes: ${{ steps.filter.outputs.changes }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
