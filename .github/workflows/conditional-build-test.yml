@@ -28,8 +28,8 @@ jobs:
     needs: [determine-builds]
     runs-on: ubuntu-22.04
     container:
-      # TODO: this probably shouldn't have a hard-coded reference to latest
-      image: ghcr.io/${{ github.repository_owner }}/openepaperlink:latest
+      # TODO: fix hard-coded image name
+      image: ghcr.io/${{ github.repository_owner }}/openepaperlink:containerized-pipeline
       # volumes:
       #   # TODO: is there a standard practice to follow for the mount point?
       #   - ${{ github.workspace }}:/github/workspace
