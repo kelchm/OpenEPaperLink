@@ -33,7 +33,7 @@ uart: clean compile flash_uart
 
 
 compile:
-#	@mkdir -p build
+	@mkdir -p build
 	@$(AS) -mcpu=cortex-m3 --gdwarf-2 -mthumb-interwork -o build/startup.o startup.S
 	@$(CC) $(CC3_FLAGS) -c mz100/core_cm3.c         -o build/core_cm3.o
 	@$(CC) $(CC3_FLAGS) -c mz100/mz100_ssp.c        -o build/mz100_ssp.o
@@ -83,7 +83,7 @@ compile:
 	@$(GPLUSPLUS) $(CPP_FLAGS) $(CC_WARNING_FLAGS) -c userinterface.cpp	-o build/userinterface.o
 	@$(GPLUSPLUS) $(CPP_FLAGS) $(CC_WARNING_FLAGS) -c main.cpp             -o build/main.o
 	@$(GPLUSPLUS) $(CPP_FLAGS) $(CC_WARNING_FLAGS) -c oepl_fs.cpp             -o build/oepl_fs.o
-	@$(GPLUSPLUS) $(CC_END_FLAGS) $(CC_WARNING_FLAGS) \
+	@$(GPLUSPLUS) -v $(CC_END_FLAGS) $(CC_WARNING_FLAGS) \
 		build/main.o \
 		build/epd_interface.o \
 		build/oepl_fs.o\
