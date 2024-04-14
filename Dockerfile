@@ -4,6 +4,7 @@ FROM --platform=linux/amd64 ubuntu:22.04
 # Update the system and install necessary packages
 RUN apt-get update && \
     apt-get install -y \
+    git \
     curl \
     python3-pip \
     build-essential \
