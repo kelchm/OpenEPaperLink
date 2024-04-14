@@ -38,7 +38,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: 'recursive'
-      - uses: ./.github/actions/setup-pio
+      # TODO: it seems like this doesn't work with the containerized pipeline
+      # - uses: ./.github/actions/setup-pio
 
       - name: ARM_Tag_FW/nRF_Bootloader
         if: ${{ needs.determine-builds.outputs.arm-tag_nrf-bootloader == 'true' }}

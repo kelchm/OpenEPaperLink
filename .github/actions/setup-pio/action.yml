@@ -10,6 +10,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.python-version }}
+
     - name: Cache pip
       id: cache-pip
       uses: actions/cache@v3
@@ -18,11 +23,6 @@ runs:
           ~/.cache/pip
           ~/.platformio/.cache
         key: ${{ runner.os }}-${{ inputs.python-version }}-pio
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ inputs.python-version }}
 
     - name: Install PlatformIO Core
       shell: bash

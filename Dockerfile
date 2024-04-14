@@ -10,8 +10,8 @@ RUN apt-get update && \
     build-essential \
     gcc-arm-none-eabi
 
-# Install the necessary python packages (pillow for image processing)
-RUN pip3 install --upgrade pillow
+# Install the necessary python packages
+RUN pip3 install --upgrade platformio intelhex pillow
 
 # TODO: this is a bit of a hack and should be improved
 RUN curl -SL https://github.com/nlohmann/json/releases/download/v3.11.3/json.hpp --create-dirs -o /usr/include/nlohmann/json.hpp
