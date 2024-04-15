@@ -10,6 +10,9 @@ RUN apt-get update && \
     build-essential \
     gcc-arm-none-eabi
 
+# Set python3 as the default python
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
 # Install the necessary python packages
 RUN pip3 install --upgrade platformio intelhex pillow
 
